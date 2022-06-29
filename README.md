@@ -1,4 +1,4 @@
-# ArtifactHUB Google Chat Notifications
+# [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/arthur-laurentdka/artifacthub_gchat_updates) ArtifactHUB Google Chat Notifications
 A simple Go Google Cloud Function that handles ArtifactHUB Webhooks and relays them to a Google Chat space. 
 
 # Setup
