@@ -1,0 +1,25 @@
+archives:
+  - id: artifacthub_gchat_updates
+    builds:
+    - default
+
+    # Archive format. Valid options are `tar.gz`, `tar.xz`, `tar`, `gz`, `zip` and `binary`.
+    # If format is `binary`, no archives are created and the binaries are instead
+    # uploaded directly.
+    # Default is `tar.gz`.
+    format: zip
+
+    meta: true
+
+    name_template: "{{ .ProjectName }}_{{ .Version }}"
+
+    wrap_in_directory: false
+
+    files:
+      - LICENSE
+      - *.go
+      - *.sum
+
+release:
+  prerelease: auto
+  mode: replace
