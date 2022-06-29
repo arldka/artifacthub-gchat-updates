@@ -17,8 +17,8 @@ archives:
 
     files:
       - LICENSE
-      - *.go
-      - *.sum
+      - '*.go'
+      - '*.sum'
 
 release:
   prerelease: auto
