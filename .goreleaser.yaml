@@ -20,6 +20,9 @@ archives:
       - '*.go'
       - '*.sum'
 
+builds:
+- skip: true
+
 release:
   prerelease: auto
   mode: replace
