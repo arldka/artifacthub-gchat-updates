@@ -19,3 +19,8 @@ archives:
       - LICENSE
       - '*.go'
       - '*.sum'
+
+release:
+  prerelease: auto
+  mode: replace
+  disable: true
