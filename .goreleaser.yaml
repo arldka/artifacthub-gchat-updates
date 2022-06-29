@@ -26,4 +26,3 @@ builds:
 release:
   prerelease: auto
   mode: replace
-  disable: true
