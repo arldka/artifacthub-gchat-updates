@@ -19,6 +19,7 @@ archives:
       - LICENSE
       - '*.go'
       - '*.sum'
+      - '*.mod'
 
 builds:
 - skip: true
