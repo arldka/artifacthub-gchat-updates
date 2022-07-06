@@ -1,11 +1,10 @@
 package artifacthub_gchat_updates
 
 import (
-	"log"
 	"fmt"
+	"log"
 	"net/http"
 )
-
 
 type gc_header struct {
 	Title      string `json:"title"`
@@ -15,21 +14,21 @@ type gc_header struct {
 }
 
 type gc_key_value struct {
-	Toplabel string `json:"topLabel, omitempty"`
-	Content  string `json:"content"`
-	Contentmultiline bool `json:"contentMultiline"`
+	Toplabel         string `json:"topLabel, omitempty"`
+	Content          string `json:"content"`
+	Contentmultiline bool   `json:"contentMultiline"`
 }
 
 type gc_openlink struct {
 	Url string `json:"url"`
-} 
+}
 
 type gc_onclick struct {
 	Openlink gc_openlink `json:"openLink"`
 }
 
 type gc_text_button struct {
-	Text string `json:"text"`
+	Text    string     `json:"text"`
 	Onclick gc_onclick `json:"onClick"`
 }
 
@@ -39,16 +38,16 @@ type gc_button struct {
 
 type gc_widget struct {
 	Keyvalue *gc_key_value `json:"keyValue, omitempty"`
-	Buttons []gc_button `json:"buttons, omitempty"`
+	Buttons  []gc_button   `json:"buttons, omitempty"`
 }
 
 type gc_section struct {
-	Header string `json:"header, omitempty"`
+	Header  string      `json:"header, omitempty"`
 	Widgets []gc_widget `json:"widgets"`
 }
 
 type gc_card struct {
-	Header gc_header `json:"header"`
+	Header   gc_header    `json:"header"`
 	Sections []gc_section `json:"sections"`
 }
 
@@ -87,8 +86,8 @@ func changesSection(p *ah_payload) gc_section {
 		for _, change := range p.Pkg.Changes {
 			section.Widgets = append(section.Widgets, gc_widget{
 				Keyvalue: &gc_key_value{
-					Toplabel: "",
-					Content: change,
+					Toplabel:         "",
+					Content:          change,
 					Contentmultiline: true,
 				},
 			})
@@ -108,13 +107,15 @@ func buttonSection(p *ah_payload) gc_section {
 	return section
 }
 
-
-
 func gcMessageGenerator(p *ah_payload) gc_cards {
 	var card gc_card
 	card.Header = messageHeader(p)
 	fmt.Printf("Header: %+v\n", card.Header)
 	var version_widget gc_widget = gc_widget{Keyvalue: &gc_key_value{Toplabel: "Version", Content: p.Pkg.Version, Contentmultiline: false}}
-	card.Sections = []gc_section{gc_section{Widgets: []gc_widget{version_widget}}, changesSection(p), buttonSection(p)}
+	if changesSection(p).Widgets == nil {
+		card.Sections = []gc_section{gc_section{Widgets: []gc_widget{version_widget}}, buttonSection(p)}
+	} else {
+		card.Sections = []gc_section{gc_section{Widgets: []gc_widget{version_widget}}, changesSection(p), buttonSection(p)}
+	}
 	return gc_cards{Cards: []gc_card{card}}
 }
