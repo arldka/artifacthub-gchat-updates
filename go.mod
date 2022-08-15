@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/GoogleCloudPlatform/functions-framework-go v1.5.3
-	github.com/cloudevents/sdk-go/v2 v2.10.1
+	github.com/cloudevents/sdk-go/v2 v2.11.0
 )
 
 require (
