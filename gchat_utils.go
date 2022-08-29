@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 )
 
 type gc_header struct {
@@ -55,16 +56,162 @@ type gc_cards struct {
 	Cards []gc_card `json:"cards"`
 }
 
-func findLogo(name string) string {
-	res, err := http.Get("https://raw.githubusercontent.com/cncf/artwork/master/projects/" + name + "/icon/color/" + name + "-icon-color.png")
-	if err != nil {
-		log.Fatal(err)
-	}
+var cncf_projects []string = []string{
+	"aerakimesh",
+	"akri",
+	"antrea",
+	"argo",
+	"artifacthub",
+	"athenz",
+	"backstage",
+	"bfe",
+	"brigade",
+	"buildpacks",
+	"cdk8s",
+	"cert-manager",
+	"chaosblade",
+	"chaosmesh",
+	"chubaofs",
+	"cilium",
+	"cloudcustodian",
+	"cloudevents",
+	"clusterpedia",
+	"cncf-distribution",
+	"cni",
+	"confidential-containers",
+	"containerd",
+	"contour",
+	"coredns",
+	"cortex",
+	"crio",
+	"crossplane",
+	"cubefs",
+	"curiefense",
+	"curve",
+	"dapr",
+	"devfile",
+	"devstream",
+	"dex",
+	"dragonfly",
+	"emissary-ingress",
+	"envoy",
+	"etcd",
+	"fabedge",
+	"falco",
+	"file.txt",
+	"fluentd",
+	"fluid",
+	"flux",
+	"fonio",
+	"grpc",
+	"harbor",
+	"helm",
+	"inclavare",
+	"in-toto",
+	"jaeger",
+	"k3s",
+	"k8gb",
+	"k8up",
+	"karmada",
+	"keda",
+	"keptn",
+	"keylime",
+	"knative",
+	"krator",
+	"krustlet",
+	"kubearmor",
+	"kubedl",
+	"kubeedge",
+	"kube-ovn",
+	"kuberhealthy",
+	"kubernetes",
+	"kube-rs",
+	"kubevela",
+	"kubevirt",
+	"kudo",
+	"kuma",
+	"kyverno",
+	"linkerd",
+	"litmus",
+	"longhorn",
+	"meshery",
+	"metal3",
+	"metallb",
+	"nats",
+	"networkservicemesh",
+	"nocalhost",
+	"notary",
+	"opa",
+	"open-cluster-management",
+	"opencost",
+	"openebs",
+	"openfeature",
+	"openfunction",
+	"opengitops",
+	"openkruise",
+	"openmetrics",
+	"openservicemesh",
+	"opentelemetry",
+	"opentracing",
+	"openyurt",
+	"operatorframework",
+	"oras",
+	"parsec",
+	"piraeus",
+	"pixie",
+	"porter",
+	"pravega",
+	"prometheus",
+	"rkt",
+	"rook",
+	"schemahero",
+	"serverlessworkflow",
+	"servicemeshinterface",
+	"servicemeshperformance",
+	"skooner",
+	"spiffe",
+	"spire",
+	"strimzi",
+	"submariner",
+	"superedge",
+	"telepresence",
+	"teller",
+	"thanos",
+	"tikv",
+	"tinkerbell",
+	"tremor",
+	"trickster",
+	"tuf",
+	"vineyard",
+	"virtualkubelet",
+	"vitess",
+	"volcano",
+	"wasmcloud",
+	"wasm-edge-runtime"}
 
-	if res.StatusCode == http.StatusNotFound {
-		return "https://raw.githubusercontent.com/cncf/artwork/master/projects/artifacthub/icon/color/artifacthub-icon-color.png"
+func is_cncf(str string) string {
+	for _, project := range cncf_projects {
+		if strings.Contains(str, project) {
+			return project
+		}
 	}
-	return "https://raw.githubusercontent.com/cncf/artwork/master/projects/" + name + "/icon/color/" + name + "-icon-color.png"
+	return ""
+}
+
+func findLogo(name string) string {
+	cncf_project := is_cncf(name)
+	if cncf_project != "" {
+		res, err := http.Get("https://raw.githubusercontent.com/cncf/artwork/master/projects/" + cncf_project + "/icon/color/" + cncf_project + "-icon-color.png")
+		if err != nil {
+			log.Fatal(err)
+		}
+		if res.StatusCode == http.StatusNotFound {
+			return "https://raw.githubusercontent.com/cncf/artwork/master/projects/artifacthub/icon/color/artifacthub-icon-color.png"
+		} else {
+			return "https://raw.githubusercontent.com/cncf/artwork/master/projects/" + cncf_project + "/icon/color/" + cncf_project + "-icon-color.png"
+		}
+	}
+	return "https://raw.githubusercontent.com/cncf/artwork/master/projects/artifacthub/icon/color/artifacthub-icon-color.png"
 }
 
 func messageHeader(p *ah_payload) gc_header {
@@ -111,11 +258,10 @@ func gcMessageGenerator(p *ah_payload) gc_cards {
 	var card gc_card
 	card.Header = messageHeader(p)
 	fmt.Printf("Header: %+v\n", card.Header)
-	var version_widget gc_widget = gc_widget{Keyvalue: &gc_key_value{Toplabel: "Version", Content: p.Pkg.Version, Contentmultiline: false}}
 	if changesSection(p).Widgets == nil {
-		card.Sections = []gc_section{gc_section{Widgets: []gc_widget{version_widget}}, buttonSection(p)}
+		card.Sections = []gc_section{buttonSection(p)}
 	} else {
-		card.Sections = []gc_section{gc_section{Widgets: []gc_widget{version_widget}}, changesSection(p), buttonSection(p)}
+		card.Sections = []gc_section{changesSection(p), buttonSection(p)}
 	}
 	return gc_cards{Cards: []gc_card{card}}
 }
