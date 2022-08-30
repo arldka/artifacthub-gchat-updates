@@ -6,7 +6,7 @@
   "datacontenttype": "application/json",
   "data": {
     "package": {
-      "name": "kyverno",
+      "name": "argo-cd",
       "version": "1.0.0",
       "url": "https://artifacthub.io/packages/helm/artifacthub/sample-package/1.0.0",
       "changes": [
