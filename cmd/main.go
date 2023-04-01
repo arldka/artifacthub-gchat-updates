@@ -1,12 +1,11 @@
 package main
 
 import (
-	"log"
 	"os"
-
-	// Blank-import the function package so the init() runs
-	"github.com/GoogleCloudPlatform/functions-framework-go/funcframework"
-	_ "github.com/arthur-laurentdka/artifacthub_gchat_updates"
+	"errors"
+	"fmt"
+	"net/http"
+	"github.com/arthur-laurentdka/artifacthub-gchat-updates/internal/chat"
 )
 
 func main() {
@@ -15,7 +14,12 @@ func main() {
 	if envPort := os.Getenv("PORT"); envPort != "" {
 		port = envPort
 	}
-	if err := funcframework.Start(port); err != nil {
-		log.Fatalf("funcframework.Start: %v\n", err)
+	http.HandleFunc("/", chat.NotificationHandler)
+	err := http.ListenAndServe(":" + port, nil)
+	if errors.Is(err, http.ErrServerClosed) {
+		fmt.Printf("server closed\n")
+	} else if err != nil {
+		fmt.Printf("error starting server: %s\n", err)
+		os.Exit(1)
 	}
 }

@@ -6,7 +6,7 @@
   "datacontenttype": "application/json",
   "data": {
     "package": {
-      "name": "argo-cd",
+      "name": "TEST_PACKAGE",
       "version": "1.0.0",
       "url": "https://artifacthub.io/packages/helm/artifacthub/sample-package/1.0.0",
       "changes": [
