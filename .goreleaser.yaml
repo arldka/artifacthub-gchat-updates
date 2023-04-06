@@ -46,9 +46,11 @@ dockers:
     - "--pull"
     - "--label=org.opencontainers.image.created={{.Date}}"
     - "--label=org.opencontainers.image.name={{.ProjectName}}"
+    - "--label=org.opencontainers.image.description='ArtifactHub to Google Chat Webhook'"
     - "--label=org.opencontainers.image.revision={{.FullCommit}}"
     - "--label=org.opencontainers.image.version={{.Version}}"
     - "--label=org.opencontainers.image.source={{.GitURL}}"
+    - "--label=io.artifacthub.package.readme-url='https://raw.githubusercontent.com/arldka/artifacthub-gchat-updates/main/README.md'"
 
 changelog:
   use: github

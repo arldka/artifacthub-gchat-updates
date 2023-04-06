@@ -1,25 +1,26 @@
 package chat
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"bytes"
 	"os"
+
 	cloudevents "github.com/cloudevents/sdk-go/v2"
 )
 
 type ah_repository struct {
-	Kind string `json:"kind"`
-	Name string `json:"name"`
+	Kind      string `json:"kind"`
+	Name      string `json:"name"`
 	Publisher string `json:"publisher"`
 }
 
 type ah_package struct {
-	Name string `json:"name"`
-	Version string `json:"version"`
-	Url string `json:"url"`
-	Changes []string `json:"changes"`
+	Name       string        `json:"name"`
+	Version    string        `json:"version"`
+	Url        string        `json:"url"`
+	Changes    []string      `json:"changes"`
 	Repository ah_repository `json:"repository"`
 }
 
@@ -28,7 +29,7 @@ type ah_payload struct {
 }
 
 func sendMessage(cards gc_cards) {
-	var body, err = json.Marshal(cards)
+	body, err := json.Marshal(cards)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -46,7 +47,7 @@ func sendMessage(cards gc_cards) {
 
 func NotificationHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("Received notification: %s\n", r.URL.Path)
-	event :=  cloudevents.NewEvent()
+	event := cloudevents.NewEvent()
 	err := json.NewDecoder(r.Body).Decode(&event)
 	if err != nil {
 		_ = fmt.Errorf("request is not in the cloud events format: %s", err)
@@ -60,5 +61,4 @@ func NotificationHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Printf("Received package: %s\n", data.Pkg.Name)
 	sendMessage(gcMessageGenerator(data))
-	return
 }

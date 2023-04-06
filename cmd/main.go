@@ -1,10 +1,11 @@
 package main
 
 import (
-	"os"
 	"errors"
 	"fmt"
 	"net/http"
+	"os"
+
 	"github.com/arthur-laurentdka/artifacthub-gchat-updates/internal/chat"
 )
 
@@ -15,7 +16,7 @@ func main() {
 		port = envPort
 	}
 	http.HandleFunc("/", chat.NotificationHandler)
-	err := http.ListenAndServe(":" + port, nil)
+	err := http.ListenAndServe(":"+port, nil)
 	if errors.Is(err, http.ErrServerClosed) {
 		fmt.Printf("server closed\n")
 	} else if err != nil {

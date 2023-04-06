@@ -15,7 +15,7 @@ type gc_header struct {
 }
 
 type gc_key_value struct {
-	Toplabel         string `json:"topLabel, omitempty"`
+	Toplabel         string `json:"topLabel,omitempty"`
 	Content          string `json:"content"`
 	Contentmultiline bool   `json:"contentMultiline"`
 }
@@ -38,12 +38,12 @@ type gc_button struct {
 }
 
 type gc_widget struct {
-	Keyvalue *gc_key_value `json:"keyValue, omitempty"`
-	Buttons  []gc_button   `json:"buttons, omitempty"`
+	Keyvalue *gc_key_value `json:"keyValue,omitempty"`
+	Buttons  []gc_button   `json:"buttons,omitempty"`
 }
 
 type gc_section struct {
-	Header  string      `json:"header, omitempty"`
+	Header  string      `json:"header,omitempty"`
 	Widgets []gc_widget `json:"widgets"`
 }
 
@@ -187,7 +187,8 @@ var cncf_projects []string = []string{
 	"vitess",
 	"volcano",
 	"wasmcloud",
-	"wasm-edge-runtime"}
+	"wasm-edge-runtime",
+}
 
 func is_cncf(str string) string {
 	for _, project := range cncf_projects {
