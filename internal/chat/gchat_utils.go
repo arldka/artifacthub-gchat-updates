@@ -187,7 +187,8 @@ var cncf_projects []string = []string{
 	"vitess",
 	"volcano",
 	"wasmcloud",
-	"wasm-edge-runtime"}
+	"wasm-edge-runtime",
+}
 
 func is_cncf(str string) string {
 	for _, project := range cncf_projects {

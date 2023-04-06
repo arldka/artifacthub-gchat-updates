@@ -3,9 +3,10 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/arthur-laurentdka/artifacthub-gchat-updates/internal/chat"
 	"net/http"
 	"os"
+
+	"github.com/arthur-laurentdka/artifacthub-gchat-updates/internal/chat"
 )
 
 func main() {

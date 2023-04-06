@@ -29,7 +29,7 @@ type ah_payload struct {
 }
 
 func sendMessage(cards gc_cards) {
-	var body, err = json.Marshal(cards)
+	body, err := json.Marshal(cards)
 	if err != nil {
 		fmt.Println(err)
 		return
