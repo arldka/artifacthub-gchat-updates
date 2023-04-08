@@ -8,6 +8,7 @@ ArtifactHUB Google Chat Notifications
     </h1>
 </div>
 
-### A simple Go Google Cloud Function that handles **ArtifactHUB Webhooks** and relays them to a Google Chat space. 
+### A simple Go webhook that handles **ArtifactHub Webhooks** and relays them to a Google Chat space.
+ 
 
 ---
