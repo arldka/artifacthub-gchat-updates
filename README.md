@@ -10,5 +10,4 @@ ArtifactHUB Google Chat Notifications
 
 ### A simple Go webhook that handles **ArtifactHub Webhooks** and relays them to a Google Chat space.
  
-
 ---
