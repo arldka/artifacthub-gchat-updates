@@ -34,7 +34,7 @@ signs:
 
 
 docker_signs:
-- artifacts: all
+- artifacts: images
   stdin: '{{ .Env.COSIGN_PASSWORD }}'
 
 dockers:
