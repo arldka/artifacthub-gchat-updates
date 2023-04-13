@@ -42,6 +42,8 @@ dockers:
     image_templates:
     - "ghcr.io/arldka/{{ .ProjectName }}:latest"
     - "ghcr.io/arldka/{{ .ProjectName }}:{{ .Summary }}"
+    - "arldka/artifacthub-gchat-updates:latest"
+    - "arldka/artifacthub-gchat-updates:{{ .Summary }}"
     build_flag_templates:
     - "--pull"
     - "--label=org.opencontainers.image.created={{.Date}}"
