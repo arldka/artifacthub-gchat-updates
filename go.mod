@@ -2,7 +2,7 @@ module github.com/arthur-laurentdka/artifacthub-gchat-updates
 
 go 1.20
 
-require github.com/cloudevents/sdk-go/v2 v2.14.0
+require github.com/cloudevents/sdk-go/v2 v2.15.0
 
 require (
 	github.com/google/go-cmp v0.5.9 // indirect
